@@ -1,0 +1,9 @@
+# GoodFirst dependencies (kept deliberately small).
+# Versions are lower bounds that were tested together; newer minor versions should work.
+
+langgraph>=1.0          # fixed-node graph: fetch -> explain -> honesty_check
+langchain-ollama>=1.0   # talks to the LOCAL Ollama server only
+httpx>=0.27             # GitHub REST API (read-only) + Ollama health check
+streamlit>=1.40         # beginner-facing UI
+python-dotenv>=1.0      # reads settings from .env
+pytest>=8.0             # tests (HTTP and LLM are mocked; no network needed)
