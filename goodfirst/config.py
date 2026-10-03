@@ -39,6 +39,8 @@ class Settings:
     num_ctx: int                  # model context window, in tokens
     temperature: float            # low = more predictable answers
     llm_timeout_s: float          # CPU inference is slow; be patient
+    keep_alive: str               # how long Ollama keeps the model in RAM after a call (avoids ~25 s reloads)
+    num_predict: int              # hard cap on answer length in tokens (stops runaway output)
 
     # --- GitHub (read-only) ---
     github_token: str | None      # optional; only raises the rate limit
@@ -57,6 +59,10 @@ class Settings:
     # --- On-disk cache for GitHub responses ---
     cache_dir: Path
     cache_ttl_s: int              # 0 disables the cache
+
+    # --- HTTP API (FastAPI) ---
+    api_port: int
+    cors_origins: list[str]       # where the web UI runs
 
 
 # ---------------------------------------------------------------------------
@@ -119,6 +125,8 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
         num_ctx=_get_int(env, "OLLAMA_NUM_CTX", 8192, minimum=512),
         temperature=_get_float(env, "OLLAMA_TEMPERATURE", 0.2, 0.0, 2.0),
         llm_timeout_s=float(_get_int(env, "OLLAMA_TIMEOUT_S", 300, minimum=10)),
+        keep_alive=_get_str(env, "OLLAMA_KEEP_ALIVE", "30m"),
+        num_predict=_get_int(env, "OLLAMA_NUM_PREDICT", 900, minimum=100),
         github_token=env.get("GITHUB_TOKEN", "").strip() or None,
         github_api_url=_get_str(env, "GITHUB_API_URL", "https://api.github.com").rstrip("/"),
         confidence_floor=_get_float(env, "CONFIDENCE_FLOOR", 0.6, 0.0, 1.0),
@@ -129,6 +137,12 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
         max_issues=_get_int(env, "MAX_ISSUES", 15, minimum=1),
         cache_dir=cache_dir,
         cache_ttl_s=_get_int(env, "CACHE_TTL_S", 3600, minimum=0),
+        api_port=_get_int(env, "API_PORT", 8000, minimum=1),
+        cors_origins=[
+            o.strip().rstrip("/")
+            for o in _get_str(env, "CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+            if o.strip()
+        ],
     )
 
 

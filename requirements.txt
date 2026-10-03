@@ -1,9 +1,11 @@
-# GoodFirst dependencies (kept deliberately small).
+# GoodFirst backend dependencies (kept deliberately small).
 # Versions are lower bounds that were tested together; newer minor versions should work.
 
-langgraph>=1.0          # fixed-node graph: fetch -> explain -> honesty_check
+langgraph>=1.0          # fixed-node graph: fetch -> explain -> pick_issues -> honesty_check
 langchain-ollama>=1.0   # talks to the LOCAL Ollama server only
+pydantic>=2.7           # validates the model's JSON (already installed with langgraph)
 httpx>=0.27             # GitHub REST API (read-only) + Ollama health check
-streamlit>=1.40         # beginner-facing UI
+fastapi>=0.115          # HTTP API with Server-Sent Events for the web UI
+uvicorn>=0.30           # runs the FastAPI app
 python-dotenv>=1.0      # reads settings from .env
 pytest>=8.0             # tests (HTTP and LLM are mocked; no network needed)
