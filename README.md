@@ -271,6 +271,14 @@ the saved copy even if it is older than `CACHE_TTL_S`, and says so in the result
 be reached, so GoodFirst used data saved on ..."). Analyze a repo once while online and it will
 work offline afterwards. The model already runs locally, and the UI's fonts are bundled.
 
+### Deploying the web UI (optional)
+
+The UI is a static Next.js app, so it can be hosted anywhere, for example on Vercel with the root
+directory set to `web`. The model and the API still run on each visitor's own computer: the hosted
+page calls `http://127.0.0.1:8000`. To allow that, add the hosted address to `CORS_ORIGINS` in
+`.env`, for example `CORS_ORIGINS=http://localhost:3000,https://your-app.vercel.app`, and restart
+the API. When the page can't reach a local backend, it shows a link to these setup steps.
+
 ### 9. Explain a failed pull request check
 
 In the web app, open **CI help** (`http://localhost:3000/ci`). From the command line:

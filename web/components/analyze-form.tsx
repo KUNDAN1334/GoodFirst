@@ -5,6 +5,7 @@ import { Cpu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ContributionGraph } from "@/components/contribution-graph";
+import { REPO_URL } from "@/components/site-header";
 import { cn } from "@/lib/utils";
 import type { Health, Language } from "@/lib/types";
 import type { AnalyzeInput } from "@/lib/api";
@@ -125,6 +126,22 @@ export function HealthLine({ health }: { health: Health | null | undefined }) {
   let text: string;
   let tone: string;
   if (health === null) {
+    const local = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+    if (!local) {
+      // Deployed page: the model and API run on the visitor's own computer, by design.
+      return (
+        <p className="mt-4 flex items-start gap-2 border-t border-rule pt-3.5 text-sm text-muted" role="status">
+          <span className="mt-1.5 size-2 shrink-0 rounded-full bg-flagged" aria-hidden />
+          <span>
+            GoodFirst runs on your computer, not on a server. Start Ollama and{" "}
+            <code className="font-mono text-[0.85em]">python -m goodfirst.api</code>, then refresh.{" "}
+            <a href={`${REPO_URL}#setup`} target="_blank" rel="noreferrer" className="text-ink underline underline-offset-4">
+              Setup guide
+            </a>
+          </span>
+        </p>
+      );
+    }
     text = 'Backend not running. Start it with "python -m goodfirst.api".';
     tone = "bg-removed";
   } else if (!health.ollama_reachable) {

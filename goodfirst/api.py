@@ -18,6 +18,7 @@ queue and sends a keep-alive comment every few seconds while the model thinks.
 from __future__ import annotations
 
 import asyncio
+import inspect
 import json
 import logging
 import queue
@@ -294,6 +295,17 @@ def sse_response(events_iter: Callable[[], Iterator[tuple[str, Any]]]) -> Stream
 # ---------------------------------------------------------------------------
 
 
+def _private_network_option() -> dict:
+    """
+    Lets a deployed UI (e.g. https://goodfirst.vercel.app) talk to this API on 127.0.0.1.
+    Chrome asks the API to opt in to requests from a public site to a local address.
+    Older Starlette versions don't have the option, so only pass it when it exists.
+    """
+    if "allow_private_network" in inspect.signature(CORSMiddleware.__init__).parameters:
+        return {"allow_private_network": True}
+    return {}
+
+
 def create_app(
     settings: Settings | None = None,
     github: GitHubClient | None = None,
@@ -312,6 +324,7 @@ def create_app(
         allow_origins=settings.cors_origins,
         allow_methods=["GET", "POST"],
         allow_headers=["Content-Type"],
+        **_private_network_option(),
     )
 
     @app.post("/api/analyze")
