@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!--
+    GoodFirst icon: a tiny contribution graph, empty except for one bright square.
+    Your first contribution, lit up green. No text.
+  -->
+  <rect width="32" height="32" rx="7" fill="#0d1117"/>
+  <rect x="5" y="5" width="6" height="6" rx="1.5" fill="#21262d"/>
+  <rect x="13" y="5" width="6" height="6" rx="1.5" fill="#21262d"/>
+  <rect x="21" y="5" width="6" height="6" rx="1.5" fill="#21262d"/>
+  <rect x="5" y="13" width="6" height="6" rx="1.5" fill="#21262d"/>
+  <rect x="13" y="13" width="6" height="6" rx="1.5" fill="#0e4429"/>
+  <rect x="21" y="13" width="6" height="6" rx="1.5" fill="#21262d"/>
+  <rect x="5" y="21" width="6" height="6" rx="1.5" fill="#21262d"/>
+  <rect x="13" y="21" width="6" height="6" rx="1.5" fill="#21262d"/>
+  <rect x="21" y="21" width="6" height="6" rx="1.5" fill="#39d353"/>
+</svg>

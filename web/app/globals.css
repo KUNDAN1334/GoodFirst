@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@import "@fontsource-variable/mona-sans/wdth.css";
+@import "@fontsource/monaspace-neon/400.css";
+@import "@fontsource/monaspace-neon/500.css";
+
+/*
+  GoodFirst design tokens, built on GitHub's own visual language:
+  Primer colours, Mona Sans (text) and Monaspace Neon (code), both open-source fonts by GitHub.
+  Dark mode is the default: pure black page, GitHub-dark cards.
+  Accent colours only ever mean a truth status:
+    verified = GitHub green, flagged = GitHub attention amber, removed = GitHub danger red.
+  The heatmap uses GitHub's contribution-graph greens.
+  Fonts are bundled locally (@fontsource), so the UI works offline.
+*/
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --paper: #f6f8fa;
+  --surface: #ffffff;
+  --surface-2: #f6f8fa;
+  --ink: #1f2328;
+  --muted: #59636e;
+  --rule: #d1d9e0;
+  --rule-strong: #afb8c1;
+  --primary: #1f883d;
+  --primary-hover: #1a7f37;
+  --primary-ink: #ffffff;
+  --verified: #1a7f37;
+  --verified-wash: #dafbe1;
+  --flagged: #9a6700;
+  --flagged-wash: #fff8c5;
+  --removed: #d1242f;
+  --removed-wash: #ffebe9;
+  --focus: #0969da;
+  --heat-0: #ebedf0;
+  --heat-1: #9be9a8;
+  --heat-2: #40c463;
+  --heat-3: #30a14e;
+  --heat-4: #216e39;
+}
+
+.dark {
+  --paper: #000000;
+  --surface: #0d1117;
+  --surface-2: #161b22;
+  --ink: #e6edf3;
+  --muted: #8d96a0;
+  --rule: #30363d;
+  --rule-strong: #484f58;
+  --primary: #238636;
+  --primary-hover: #2ea043;
+  --primary-ink: #ffffff;
+  --verified: #3fb950;
+  --verified-wash: rgba(46, 160, 67, 0.15);
+  --flagged: #d29922;
+  --flagged-wash: rgba(187, 128, 9, 0.15);
+  --removed: #f85149;
+  --removed-wash: rgba(248, 81, 73, 0.12);
+  --focus: #1f6feb;
+  --heat-0: #161b22;
+  --heat-1: #0e4429;
+  --heat-2: #006d32;
+  --heat-3: #26a641;
+  --heat-4: #39d353;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-ink: var(--primary-ink);
+  --color-verified: var(--verified);
+  --color-verified-wash: var(--verified-wash);
+  --color-flagged: var(--flagged);
+  --color-flagged-wash: var(--flagged-wash);
+  --color-removed: var(--removed);
+  --color-removed-wash: var(--removed-wash);
+  --color-focus: var(--focus);
+
+  --font-sans: "Mona Sans Variable", -apple-system, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Monaspace Neon", ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  --text-display: 4rem;
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.035em;
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Mona Sans has a width axis: the headline is set expanded for a confident, GitHub-like voice. */
+.display-wide {
+  font-stretch: 112%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgba(56, 139, 253, 0.3);
+}
+
+/* ---- Contribution heatmap (hero background) ---- */
+.heat-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  outline: 1px solid rgba(27, 31, 35, 0.06);
+  outline-offset: -1px;
+}
+.dark .heat-cell {
+  outline-color: rgba(255, 255, 255, 0.04);
+}
+.heat-0 { background: var(--heat-0); }
+.heat-1 { background: var(--heat-1); }
+.heat-2 { background: var(--heat-2); }
+.heat-3 { background: var(--heat-3); }
+.heat-4 { background: var(--heat-4); }
+
+/* The one orchestrated moment: the first green square lights up once. */
+.heat-first {
+  background: var(--heat-0);
+  animation: first-square 900ms cubic-bezier(0.3, 0, 0.2, 1) 500ms forwards;
+}
+@keyframes first-square {
+  0% { background: var(--heat-0); box-shadow: 0 0 0 0 rgba(57, 211, 83, 0); }
+  60% { background: var(--heat-4); box-shadow: 0 0 0 6px rgba(57, 211, 83, 0.25); }
+  100% { background: var(--heat-4); box-shadow: 0 0 0 3px rgba(57, 211, 83, 0.18); }
+}
+.heat-label {
+  opacity: 0;
+  animation: fade-in 300ms ease-out 1200ms forwards;
+}
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+/* Removed claims in the evidence panel are struck through in GitHub's danger red. */
+.struck {
+  text-decoration-line: line-through;
+  text-decoration-color: var(--removed);
+  text-decoration-thickness: 2px;
+}
+.wavy {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--flagged);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  text-decoration-skip-ink: none;
+  line-height: 1.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heat-first {
+    animation: none;
+    background: var(--heat-4);
+  }
+  .heat-label {
+    animation: none;
+    opacity: 1;
+  }
+  .animate-spin {
+    animation-duration: 2.5s;
+  }
+}
