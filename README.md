@@ -101,22 +101,8 @@ shows "Next edition not announced" rather than a guess.
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    UI["Next.js UI<br/>localhost:3000"] -- "POST /api/analyze<br/>POST /api/ci" --> API["FastAPI<br/>localhost:8000"]
-    API -- "SSE: step events,<br/>then result" --> UI
-    API --> G
+<img width="1838" height="465" alt="image" src="https://github.com/user-attachments/assets/37ead323-0b24-473f-bf87-c59ecfc9f020" />
 
-    subgraph G["LangGraph (fixed nodes)"]
-        direction LR
-        F["fetch<br/><i>code</i>"] --> E["explain<br/><i>Gemma</i>"] --> P["pick_issues<br/><i>code ranks,<br/>Gemma picks</i>"] --> H["honesty_check<br/><i>code</i>"]
-    end
-
-    F -- "GET only" --> GH[("GitHub REST API")]
-    F <--> C[(".cache/<br/>offline copy")]
-    E -- "JSON schema" --> O["Ollama<br/>gemma3:4b<br/>on your CPU"]
-    P -- "JSON schema" --> O
-```
 
 The CI explainer is a second fixed graph with the same shape: `fetch` (PR, checks, logs, changed
 files) → `explain` (Gemma) → `honesty_check`. If there's neither a log nor an annotation to read,
