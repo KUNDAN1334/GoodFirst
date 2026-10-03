@@ -1,4 +1,6 @@
-# GoodFirst
+<img width="1478" height="861" alt="image" src="https://github.com/user-attachments/assets/f07b9a75-2c85-479a-974d-00803da5fccc" />
+
+## GoodFirst
 
 **Your first green square starts here.** GoodFirst helps beginners make their first open source
 contribution. Paste a GitHub repo and (optionally) a question. GoodFirst answers the question from
