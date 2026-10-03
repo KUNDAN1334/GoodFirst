@@ -1,0 +1,14 @@
+# Repos for the GoodFirst mini eval (one owner/repo per line; # starts a comment).
+# Chosen as well-known beginner-friendly projects, plus a few that test the honesty
+# layer in other ways (no beginner label, issues hosted elsewhere, very large trees).
+# Whether each one currently has open beginner issues is whatever GitHub says on the day you run it.
+firstcontributions/first-contributions
+freeCodeCamp/freeCodeCamp
+zulip/zulip
+TheAlgorithms/Python
+oppia/oppia
+processing/p5.js
+jupyterlab/jupyterlab
+mdn/content
+MunGell/awesome-for-beginners
+django/django
