@@ -14,24 +14,6 @@ are no API keys and no hosted LLM calls, and GitHub is only ever read, never wri
 
 Built for the DEV Hacktoberfest 2026 Weekend Challenge, **"Build for a Friend"**.
 
-## Why I built this: Shivin
-
-My friend Shivin wanted to make his first open source contribution. He had picked a project,
-[AOSSIE-Org/DebateAI](https://github.com/AOSSIE-Org/DebateAI): a Go backend, a React frontend,
-over a hundred open issues and a long README. He didn't know where to start. Which files matter?
-How do I run it? Which issue is small enough for a first try?
-
-So I built the first version of GoodFirst for him: paste the repo, ask your question, and get an
-answer drawn from the project's own docs, a map of the important files, and three issues worth
-trying, each with the evidence behind it.
-
-He used it on DebateAI and opened his first pull request. Then the checks went red. The
-failed CI log was about 2,500 lines long, and he couldn't tell which of them actually mattered.
-That's a wall a lot of beginners hit, right after the hardest part is done. So I added **CI help**:
-paste the pull request, and GoodFirst reads the failed checks, cuts the log down to the part around
-the error, and explains in plain words what broke and how to fix it. Every log line it quotes is
-checked against the real log.
-
 A first pull request is a start, not a finish. So GoodFirst also has a page of open source programs
 (GSoC, Outreachy, LFX and more) with their official dates, for the question that comes next: where
 do I keep contributing?
